@@ -156,7 +156,7 @@ function fire(t) { if (t.fired || t.timer >= 0) return; t.timer = t.delay || 0; 
 function stepTraps(dt) {
   for (const t of L.traps) {
     if (trig(t)) fire(t);
-    if (t.timer >= 0 && !t.fired) { t.timer -= dt; t.shake = t.timer; if (t.timer <= 0) { t.fired = true; act(t); for (const u of L.traps) if (u.after === t.id) fire(u); } }
+    if (t.timer >= 0 && !t.fired) { t.timer -= dt; t.shake = t.timer; if (t.timer <= 0) { t.fired = true; act(t); if (t.id) for (const u of L.traps) if (u.after === t.id) fire(u); } }   // grandinė tik su id (be jo undefined === undefined suveikdavo visi)
   }
   /* slenkantys kūnai: juda link taikinio; ant jų stovintis veikėjas važiuoja kartu; suspaustas - žūva */
   for (const b of L.bodies) {

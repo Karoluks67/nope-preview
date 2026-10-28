@@ -190,7 +190,7 @@ const LEVELS_ALL = [
     "#P                           #",
     "##############################",
     "##############################"
-  ], traps: [{"k": "rise", "on": "time", "at": 1.2, "sp": 0.75, "say": "rise"}, {"g": "a", "k": "crumble", "on": "touch", "delay": 0.35}, {"k": "door", "to": "1", "on": "door", "dist": 2.2}] },
+  ], traps: [{"k": "rise", "on": "time", "at": 1.2, "sp": 0.75, "say": "rise"}, {"g": "a", "k": "crumble", "on": "touch", "each": true, "delay": 0.4}, {"k": "door", "to": "1", "on": "door", "dist": 2.2}] },
   { id: "w2_1", map: [
     "##############################",
     "#                            #",
