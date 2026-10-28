@@ -102,12 +102,12 @@ addEventListener('blur', () => { for (const k in keys) keys[k] = false; tbPtr.cl
 document.addEventListener('visibilitychange', () => { if (document.hidden) onBlur(); });
 
 /* ---------- Garsas: viskas sintezuojama (0 baitų) ---------- */
-let AC = null, master = null, sfxBus = null, musBus = null, muted = false, adMute = false;
+let AC = null, master = null, sfxBus = null, muted = false, adMute = false;
 function audioInit() {
   if (AC) { if (AC.state === 'suspended') AC.resume(); return; }
-  try { AC = new (window.AudioContext || window.webkitAudioContext)(); master = AC.createGain(); master.connect(AC.destination); sfxBus = AC.createGain(); sfxBus.connect(master); musBus = AC.createGain(); musBus.connect(master); setVol(); } catch (_) { AC = null; }
+  try { AC = new (window.AudioContext || window.webkitAudioContext)(); master = AC.createGain(); master.connect(AC.destination); sfxBus = AC.createGain(); sfxBus.connect(master); setVol(); } catch (_) { AC = null; }
 }
-function setVol() { if (!master) return; master.gain.value = adMute ? 0 : .5; sfxBus.gain.value = save && save.sfx === false ? 0 : 1; musBus.gain.value = save && save.music === false ? 0 : 1; }
+function setVol() { if (!master) return; master.gain.value = adMute ? 0 : .5; sfxBus.gain.value = save && save.sfx === false ? 0 : 1; }
 let noiseBuf = null;
 function noise(dur, f0, f1, vol, type, delay) {
   if (!AC) return; const t = AC.currentTime + (delay || 0);
@@ -154,7 +154,7 @@ const SAVE_KEY = /[?&](shots|solver|test)/.test(location.search) ? 'nope_test' :
 let save = null;
 function loadSave() {
   let s = null; try { s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); } catch (_) { }
-  save = Object.assign({ v: 1, done: {}, deaths: {}, unlocked: 1, music: true, sfx: true, lang: null, total: 0 }, s || {});
+  save = Object.assign({ v: 1, done: {}, deaths: {}, unlocked: 1, sfx: true, lang: null, total: 0 }, s || {});
 }
 function persist() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (_) { } }
 

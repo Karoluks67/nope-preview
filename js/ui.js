@@ -177,7 +177,7 @@ function frame(now) {
   else if (state === 'replay') { drawReplay(dt); }
   else if (state === 'wait') { if (replay) ctx.drawImage(replay.cache, 0, 0); }
   else if (state === 'worldClear') drawWorldClear(dt);
-  drawWipe(dt); musicUpdate();
+  drawWipe(dt);
   if (Poki.adShow) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, GW, GH); text('AD (LOCAL TEST)', 240, 130, 2, '#fff', .5); }
   padPrev = PAD ? Object.assign({}, PAD) : {};
   present();

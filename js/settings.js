@@ -1,4 +1,4 @@
-/* settings: nustatymų langas kaip populiariuose Poki žaidimuose - muzikos ir garsų jungikliai, kalbų tinklelis su pikselinėmis vėliavėlėmis;
+/* settings: nustatymų langas kaip populiariuose Poki žaidimuose - garsų jungiklis, kalbų tinklelis su pikselinėmis vėliavėlėmis;
    piktogramos (krumpliaratis, garsiakalbis) kampuose */
 'use strict';
 let SET_FROM = 'title';
@@ -41,11 +41,10 @@ function drawSettings(dt) {
   panel(84, 18, 312, 236, COL.panel, COL.edge); ctx.fillStyle = 'rgba(255,255,255,.06)'; ctx.fillRect(85, 19, 310, 2);
   iconGear(96, 26, true); text(T('settings'), 240, 28, 2, COL.txt, .5);
   /* garsai */
-  iconMusic(104, 58); text(T('music'), 124, 61, 1, COL.txt, 0); toggle(214, 56, save.music !== false, () => { save.music = save.music === false; persist(); setVol(); });
-  iconSpeaker(104, 84, save.sfx !== false); text(T('sounds'), 124, 87, 1, COL.txt, 0); toggle(214, 82, save.sfx !== false, () => { save.sfx = save.sfx === false; persist(); setVol(); });
+  iconSpeaker(104, 60, save.sfx !== false); text(T('sounds'), 124, 63, 1, COL.txt, 0); toggle(214, 58, save.sfx !== false, () => { save.sfx = save.sfx === false; persist(); setVol(); });
   /* kalbos: 2 stulpeliai × 5 */
-  text(T('language'), 104, 112, 1, COL.dim, 0);
-  LANG_ORDER.forEach((l, i) => { const x = 100 + (i % 2) * 142, y = 124 + Math.floor(i / 2) * 22, on = l === LANG, hv = hover && hover.x === x && hover.y === y;
+  text(T('language'), 104, 92, 1, COL.dim, 0);
+  LANG_ORDER.forEach((l, i) => { const x = 100 + (i % 2) * 142, y = 104 + Math.floor(i / 2) * 24, on = l === LANG, hv = hover && hover.x === x && hover.y === y;
     panel(x, y, 136, 18, on ? '#3A3050' : hv ? '#2E2640' : COL.panel2, on ? COL.acc : COL.edge);
     drawFlag(l, x + 5, y + 5); text(LANGS[l].lang, x + 24, y + 5, 1, on ? COL.acc : COL.txt, 0);
     button(x, y, 136, 18, () => langSet(l)); });
@@ -55,18 +54,16 @@ function drawSettings(dt) {
 const IC = {
   gear: ['....kk....', '.k.kwwk.k.', 'kwkwwwwkwk', '.kwwkkwwk.', 'kwwk..kwwk', 'kwwk..kwwk', '.kwwkkwwk.', 'kwkwwwwkwk', '.k.kwwk.k.', '....kk....'],
   spk: ['....k.....', '...kk.....', 'kkkwk.....', 'kwwwk.....', 'kwwwk.....', 'kkkwk.....', '...kk.....', '....k.....'],
-  note: ['...kkkk', '...kwwk', '...kkkk', '...k..k', '...k..k', '.kkk.kk', 'kwwkkwk', '.kk..k.'],
 };
 function iconGear(x, y, big) { drawMap(IC.gear, x, y, { k: OUT, w: '#C9C2D8' }); }
 function iconSpeaker(x, y, on) {
   drawMap(IC.spk, x, y, { k: OUT, w: '#E8E4F4' }); ctx.fillStyle = on ? '#E8E4F4' : '#E0443A';
   if (on) { ctx.fillRect(x + 6, y + 2, 1, 4); ctx.fillRect(x + 8, y + 1, 1, 6); } else { for (let i = 0; i < 4; i++) { ctx.fillRect(x + 6 + i, y + 2 + i, 1, 1); ctx.fillRect(x + 9 - i, y + 2 + i, 1, 1); } }
 }
-function iconMusic(x, y) { drawMap(IC.note, x, y, { k: OUT, w: '#E8E4F4' }); }
 /* kampų piktogramų mygtukai (titulinis, žemėlapis) */
 function iconBtn(x, y, kind, fn) {
   const hv = hover && hover.x === x && hover.y === y; panel(x, y + (hv ? -1 : 0), 22, 20, hv ? '#3A3050' : COL.panel2);
-  if (kind === 'gear') iconGear(x + 6, y + 5 + (hv ? -1 : 0)); else if (kind === 'snd') iconSpeaker(x + 6, y + 6 + (hv ? -1 : 0), save.sfx !== false || save.music !== false);
+  if (kind === 'gear') iconGear(x + 6, y + 5 + (hv ? -1 : 0)); else if (kind === 'snd') iconSpeaker(x + 6, y + 6 + (hv ? -1 : 0), save.sfx !== false);
   button(x, y, 22, 20, fn);
 }
-function quickMute() { const on = save.sfx !== false || save.music !== false; save.sfx = !on; save.music = !on; persist(); setVol(); }
+function quickMute() { save.sfx = save.sfx === false; persist(); setVol(); }
